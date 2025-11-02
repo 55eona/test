@@ -32,4 +32,4 @@ jobs:
           KAKAO_REFRESH_TOKEN: ${{ secrets.KAKAO_REFRESH_TOKEN }}
           KAKAO_REDIRECT_URI: ${{ secrets.KAKAO_REDIRECT_URI }}
         run: |
-          python send_taurus_horoscope_kakao.py
+          python send_horoscope_kakao.py
