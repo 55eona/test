@@ -1,0 +1,35 @@
+name: Daily Horoscope Sender
+
+on:
+  schedule:
+    - cron: "0 0 * * *"   # 매일 00:00 UTC = 09:00 KST
+  workflow_dispatch: {}    # 수동 실행도 가능
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install deps
+        run: |
+          python -m pip install --upgrade pip
+          pip install requests pandas
+          pip install beautifulsoup4
+          pip install selenium
+          pip install webdriver-manager
+          pip install deep-translator
+
+      - name: Run script
+        env:
+          KAKAO_CLIENT_ID: ${{ secrets.KAKAO_CLIENT_ID }}
+          KAKAO_REFRESH_TOKEN: ${{ secrets.KAKAO_REFRESH_TOKEN }}
+          KAKAO_REDIRECT_URI: ${{ secrets.KAKAO_REDIRECT_URI }}
+        run: |
+          python send_taurus_horoscope_kakao.py
